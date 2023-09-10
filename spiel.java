@@ -42,7 +42,7 @@ class spiel extends Ereignisbehandlung
         description1.PositionSetzen(450, 180);
         
         Text description2 = new Text();
-        description2.TextSetzen("- Leertaste um Symbol zu setzen");
+        description2.TextSetzen("- Leertaste um Symbol zu setzen");y
         description2.TextGrößeSetzen(20);
         description2.PositionSetzen(450, 210);
         
