@@ -3,18 +3,21 @@
 import java.util.*;
 class spiel extends Ereignisbehandlung
 {
-    Dreieck dreieck; //y koord - 60 dann gleiche hoehe wie kreis
+    //global variablen
+    Dreieck dreieck;
     Kreis kreis;
     Rechteck background;
     Rechteck cursor;
     int [][] boardData; // 0-kreis, 1-dreieck, 5-empty
     boolean gameOver = false;
     Dreieck [] objects1;
+    //text objects
     Text gameOverText = new Text();
     Text gameOverText2 = new Text();
     Text stats1 = new Text();
     Text stats2 = new Text();
     Text stats3 = new Text();
+    //count variablen
     int gameCount = 0;
     int winCount = 0;
     int lostCount = 0;
@@ -72,14 +75,14 @@ class spiel extends Ereignisbehandlung
         drawBackground();
         gameOverText.SichtbarkeitSetzen(false);
         gameOverText2.SichtbarkeitSetzen(false);
-        //cursor
+        //cursor initialisieren
         cursor = new Rechteck();
         cursor.FarbeSetzen("weiss");
         cursor.GrößeSetzen(100, 100);
         cursor.PositionSetzen(100, 100);
-        //data
+        //boardData zuruecksetzen
         boardData = new int[][] { {5,5,5}, {5,5,5}, {5,5,5} };
-        printBoard();
+        printBoard(); //(debug)
         gameOver = false;
         
         //new game
@@ -135,7 +138,7 @@ class spiel extends Ereignisbehandlung
     }
     
     @Override void TasteGedrückt (char taste) {
-        if (taste == " ".charAt(0)) {
+        if (taste == " ".charAt(0)) { //leertaste
             if (gameOver) {
                 //spiel beginnen
                 reset();
@@ -161,57 +164,40 @@ class spiel extends Ereignisbehandlung
         }
     }
     
-    @Override void SonderTasteGedrückt(int code) {
+    @Override void SonderTasteGedrückt(int code) { //pfeiltasten
         if(code == 37) {
-            if (checkCursorPosition("left")) {
+            if (cursor.x > 110) {
                 cursor.Verschieben(-100, 0);
             }
         }
         
         if(code == 38) {
-            if (checkCursorPosition("up")) {
+            if (cursor.y > 110) {
                 cursor.Verschieben(0, -100);
             }
         }
         
         if(code == 39) {
-            if (checkCursorPosition("right")) {
+            if (cursor.x < 300) {
                 cursor.Verschieben(100, 0);
             }
         }
         
         if(code == 40) {
-            if (checkCursorPosition("down")) {
+            if (cursor.y < 300) {
                 cursor.Verschieben(0, 100);
             }
         }
     }  
     
-    boolean checkCursorPosition(String dir) {
-        //System.out.println(cursor.y);
-        //System.out.println(dir);
-        
-        if (dir == "left") {
-            return cursor.x > 110;
-        } else if (dir == "up") {
-            return cursor.y > 110;
-        } else if (dir == "right") {
-            return cursor.x < 300;
-        } else if (dir == "down") {
-            return cursor.y < 300;
-        }
-        
-        return true;
-    }
-    
     boolean checkForGameOver(){
-        //check columns
+        //check columns / spalten
         for (int x = 0; x <= 2; x++) {
             if (boardData[x][0] != 5 && boardData[x][0] == boardData[x][1] && boardData[x][0] == boardData[x][2]) {
                 gameOver = true;
             }
         }
-        //check rows
+        //check rows / reihen
         for (int y = 0; y <= 2; y++) {
             if (boardData[0][y] != 5 && boardData[0][y] == boardData[1][y] && boardData[0][y] == boardData[2][y]) {
                 gameOver = true;
@@ -224,6 +210,7 @@ class spiel extends Ereignisbehandlung
         if (boardData[1][1] != 5 && boardData[1][1] == boardData[2][0] && boardData[1][1] == boardData[0][2]) {
             gameOver = true;
         }
+        
         //if no empty cells left -> tie
         boolean emptyCellsLeft = false;
         for (int y = 0; y <= 2; y++) {
