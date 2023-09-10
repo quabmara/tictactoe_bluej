@@ -3,14 +3,14 @@
 import java.util.*;
 class spiel extends Ereignisbehandlung
 {
-    //global variablen
+    //globale variablen:
+    //Referenzen
     Dreieck dreieck;
     Kreis kreis;
     Rechteck background;
     Rechteck cursor;
     int [][] boardData; // 0-kreis, 1-dreieck, 5-empty
     boolean gameOver = false;
-    Dreieck [] objects1;
     //text objects
     Text gameOverText = new Text();
     Text gameOverText2 = new Text();
@@ -42,7 +42,7 @@ class spiel extends Ereignisbehandlung
         description1.PositionSetzen(450, 180);
         
         Text description2 = new Text();
-        description2.TextSetzen("- Leertaste um Symbol zu setzen");y
+        description2.TextSetzen("- Leertaste um Symbol zu setzen");
         description2.TextGrößeSetzen(20);
         description2.PositionSetzen(450, 210);
         
